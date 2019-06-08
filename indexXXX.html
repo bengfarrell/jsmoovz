@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="bitview.js"></script>
+
+    <style>
+        div.container {
+            font-family: sans-serif;
+            display: flex;
+        }
+        div.item {
+            background-color: #5f6773;
+            height: 50px;
+            padding: 15px;
+            font-size: x-large;
+            color: white;
+        }
+
+        div.item div {
+            background-color: beige;
+            width: 100%;
+            padding: 15px;
+            color: black;
+        }
+    </style>
+    <script>
+        function onButtonClick() {
+            navigator.bluetooth.requestDevice( {
+                optionalServices: ['0000fef5-0000-1000-8000-00805f9b34fb', 0xFEF5, 0x180d, 'e89efdda-ad17-43d5-8ca9-08024534606d', '40f23655-0e05-4283-8e4e-cc01af6e3ec7'],
+                filters: [{
+                    namePrefix: 'BMZ001'
+                }],
+            })
+                .then(device => {
+                    // Human-readable name of the device.
+                    console.log(device.name);
+
+                    // Attempts to connect to remote GATT Server.
+                    return device.gatt.connect();
+                })
+                .then(server => {
+                    console.log('Getting GAP Service...');
+                    return server.getPrimaryService('e89efdda-ad17-43d5-8ca9-08024534606d');//(0x003d);//0000180a-0000-1000-8000-00805f9b34fb');
+                })
+                .then(service => {
+                    console.log('Getting GAP Characteristics...', service);
+                    // 6bca21d1-521d-4548-bf0b-208cf8cc8e9f
+                    // 15005991-b131-3396-014c-664c9867b917
+                    return service.getCharacteristic('6bca21d1-521d-4548-bf0b-208cf8cc8e9f'); //('00002a24-0000-1000-8000-00805f9b34fb');
+                })
+                .then(ch => {
+                    console.log('adding event listener', ch)
+                     ch.addEventListener('characteristicvaluechanged', handleNotifications);
+                    return ch;
+                }).then(ch => {
+                    console.log('start notifications')
+                    return ch.startNotifications()
+                })
+                /*.then(characteristic => {
+                    // Reading Battery Level...
+                    return characteristic.readValue();
+                })
+                .then(value => {
+                    console.log('value is ' + value.getUint8(0));
+                })*/
+                .catch(error => {
+                    console.log(error.message);
+                });
+        }
+
+        function handleNotifications(e) {
+            console.log('event', e);
+
+            const b = new Uint8Array(e.target.value.buffer);
+            //view = new DataView(e.target.value.buffer);
+            buffer = e.target.value.buffer;
+            const bv = new BitView(buffer);
+
+            const binarySequenceNum = (bv.getBit(7) * Math.pow(2, 0)) + (bv.getBit(6) * Math.pow(2, 1)) + (bv.getBit(5) * Math.pow(2, 2)) + (bv.getBit(4) * Math.pow(2, 3)) + (bv.getBit(3) * Math.pow(2, 4)) + (bv.getBit(2) * Math.pow(2, 5)) + (bv.getBit(1) * Math.pow(2, 6)) + (bv.getBit(0) * Math.pow(2, 7));
+
+            /*
+            Sequence number	Unsigned int	0	8 bit	Sequential number for detect missing. If it is other than the previous value + 1, a missing has occurred. Next to 255 is 0.
+State				Not used
+Value X	int	10 bit	10 bit	X axis value of accelerometer
+Value Y	int	10 bit	10 bit	Y axis value of accelerometer
+Value Z	int	10 bit	10 bit	Z axis value of accelerometer
+             */
+
+            document.getElementById('seq').innerText = b[0];
+            document.getElementById('state').innerText = b[1];
+            document.getElementById('valx').innerText = b[2];
+            document.getElementById('valx2').innerText = b[3];
+            document.getElementById('valy').innerText = b[4];
+            document.getElementById('valy2').innerText = b[5];
+            document.getElementById('valz').innerText = b[6];
+            document.getElementById('valz2').innerText = b[7];
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <div class="item">SEQ<div id="seq">3</div></div>
+    <div class="item">STATE<div id="state">3</div></div>
+    <div class="item">X<div id="valx">2</div></div>
+    <div class="item">X2<div id="valx2"></div></div>
+    <div class="item">Y<div id="valy"></div></div>
+    <div class="item">Y2<div id="valy2"></div></div>
+    <div class="item">Z<div id="valz"></div></div>
+    <div class="item">Z2<div id="valz2"></div>
+</div>
+<button onclick="onButtonClick()">Do it!</button>
+
+</body>
+</html>
