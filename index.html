@@ -1,73 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>jsMoovz</title>
-    <script type="module">
-        import Bluetooth from './src/bluetoothconnection.js';
-        import Buffer from './src/buffermanipulation.js';
-
-        window.onButtonClick = function() {
-            const blu = new Bluetooth();
-            blu.addEventListener(Bluetooth.NOTIFICATION_EVENT, e => {
-                //const buffer = new Buffer(e.detail.buffer);
-                const u8 = new Uint8Array(e.detail.buffer);
-
-                const sequenceNumber = u8[0];
-                const state = u8[1]; // unused
-                const x = u8[2] - 255/2;
-                const y = u8[4] - 255/2;
-                const z = u8[6] - 255/2;
-                document.getElementById('seq').innerText = sequenceNumber;
-                console.log(state);
-                document.getElementById('valx').innerText = x;
-                document.getElementById('valy').innerText = y;
-                document.getElementById('valz').innerText = z;
-            });
-
-            blu.addEventListener(Bluetooth.STATUS_EVENT, e => {
-               console.info(e.detail.status);
-            });
-
-            blu.addEventListener(Bluetooth.ERROR_EVENT, e => {
-                console.error(e.detail.error.message);
-            });
-
-            blu.connect();
-        }
-
-    </script>
-
-    <style>
-        div.container {
-            font-family: sans-serif;
-            display: flex;
-        }
-        div.item {
-            background-color: #5f6773;
-            height: 50px;
-            padding: 15px;
-            font-size: x-large;
-            color: white;
-        }
-
-        div.item div {
-            background-color: beige;
-            width: 100%;
-            padding: 15px;
-            color: black;
-        }
-        </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="item">SEQ<div id="seq">3</div></div>
-    <div class="item">X<div id="valx">2</div></div>
-    <div class="item">Y<div id="valy"></div></div>
-    <div class="item">Z<div id="valz"></div></div>
-</div>
-<button onclick="onButtonClick()">Do it!</button>
-
-</body>
+<html>
+    <head>
+        <script type="module" src="src/components/app/app.js"></script>
+    </head>
+    <body class="spectrum spectrum--medium">
+        <moovz-app></moovz-app>
+    </body>
 </html>
