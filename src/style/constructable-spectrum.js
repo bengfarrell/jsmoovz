@@ -105,10 +105,12 @@ export default {
         const globalvars = `${config.baseURI}/vars/spectrum-global.css`;
         const mediumvars = `${config.baseURI}/vars/spectrum-medium.css`;
         const largevars = `${config.baseURI}/vars/spectrum-large.css`;
+        const themevars = `${config.baseURI}/vars/spectrum-${config.theme}.css`;
 
         sheetRefs.push( { url: globalvars, scope: document });
         sheetRefs.push( { url: mediumvars, scope: document });
         sheetRefs.push( { url: largevars, scope: document });
+        sheetRefs.push( { url: themevars, scope: document });
 
         if (config.applyCoreToDocument) {
             sheetRefs.push( { url: core, scope: document });

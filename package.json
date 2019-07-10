@@ -3,8 +3,13 @@
   "version": "1.0.0",
   "dependencies": {
     "@adobe/spectrum-css": "^2.13.0",
-    "attrocity": "^0.5.1",
+    "attrocity": "^0.6.0",
+    "chirashi-event-emitter": "^2.0.3",
     "lit-html": "^1.1.0",
-    "style-shelter": "^0.1.1"
+    "observable-membrane": "^0.26.1",
+    "style-shelter": "^0.1.2"
+  },
+  "devDependencies": {
+    "@pika/web": "^0.4.3"
   }
 }

@@ -1,38 +1,43 @@
-import {html, render} from '../../../node_modules/lit-html/lit-html.js';
-import {Reflect, Map} from '../../../node_modules/attrocity/src/attrocity.js';
-import StyleShelter from '../../../node_modules/style-shelter/style-shelter.js';
-import Spectrum from '../../style/constructable-spectrum.js';
+import {Register} from '../../../web_modules/attrocity.js';
+import {Mixins} from '../mixins.js';
+import DataModel from '../../datamodel.js';
+import DeviceManager from '../../devices/devicemanager.js';
 import Template from './template.js';
 
 export default class LeftPanel extends HTMLElement {
     constructor() {
         super();
+        this.init(Template);
+        DataModel.emitter.on(DataModel.MODEL_UPDATE, () => this.render() );
+        DeviceManager.emitter.on('beat', track => this.onBeat(track));
+    }
 
-        this.model = { 
-            devices: [ 
-                { name: 'Device 1' },
-                { name: 'Device 2' },
-                { name: 'Device 3' },
-                { name: 'Device 4' }
-            ]
-        };
-    
-        Spectrum.config.baseURI = './src/style';
-        this.attachShadow( { mode: 'open'} );
-        StyleShelter.adopt(Spectrum.getComponents(), this.shadowRoot);
+    onBeat(track) {
+        if (track > -1) {
+            this.dom.tracks[track].classList.toggle('pulse', true);
+            setTimeout( () => {
+                this.dom.tracks[track].classList.toggle('pulse', false);
+            }, 250);
+        }
+    }
+
+    onToggleRecord(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const indx = parseInt(e.currentTarget.getAttribute('track'));
+        DataModel.tracks[indx].recording = !DataModel.tracks[indx].recording;
         this.render();
     }
 
-    eventCallback(e) {
-        console.log(this);
-    }
-
-    render() {
-        render(Template.render(this.shadowRoot, this.model), this.shadowRoot);
-        Map.wire(this.shadowRoot, e => this.eventCallback(e));
+    onSelect(e) {
+        const indx = parseInt(e.currentTarget.getAttribute('track'));
+        if (DataModel.selected === indx) {
+            DataModel.selected = null;
+        } else {
+            DataModel.selected = indx;
+        }
+        this.render();
     }
 }
 
-if (!customElements.get('moovz-left-panel')) {
-    customElements.define('moovz-left-panel', Reflect.attach(LeftPanel));
-}
+Register('moovz-left-panel', LeftPanel, Mixins);

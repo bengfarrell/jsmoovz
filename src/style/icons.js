@@ -1,4 +1,4 @@
-import {html} from '../../node_modules/lit-html/lit-html.js';
+import {html} from '../../web_modules/lit-html.js';
 
 export default {
 	get AlertMedium() { return html`<svg xmlns="http://www.w3.org/2000/svg" id="AlertMedium"><path d="M8.564 1.289L.2 16.256A.5.5 0 0 0 .636 17h16.728a.5.5 0 0 0 .436-.744L9.436 1.289a.5.5 0 0 0-.872 0zM10 14.75a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25zm0-3a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-6a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25z" class="spectrum-UIIcon--medium"/><path d="M10.563 2.206l-9.249 16.55a.5.5 0 0 0 .436.744h18.5a.5.5 0 0 0 .436-.744l-9.251-16.55a.5.5 0 0 0-.872 0zm1.436 15.044a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25zm0-3.5a.25.25 0 0 1-.25.25h-1.5a.25.25 0 0 1-.25-.25v-6a.25.25 0 0 1 .25-.25h1.5a.25.25 0 0 1 .25.25z" class="spectrum-UIIcon--large"/></svg>`; }, 
@@ -36,6 +36,7 @@ export default {
 	get SuccessSmall() { return html`<svg xmlns="http://www.w3.org/2000/svg" id="SuccessSmall"><path d="M7 .778A6.222 6.222 0 1 0 13.222 7 6.222 6.222 0 0 0 7 .778zm4.148 3.53l-4.919 6.324a.467.467 0 0 1-.34.18h-.028a.467.467 0 0 1-.331-.138L2.502 7.641a.467.467 0 0 1 0-.66l.516-.516a.467.467 0 0 1 .66 0l2.078 2.084 4.088-5.254a.467.467 0 0 1 .655-.078l.566.44a.467.467 0 0 1 .083.652z" class="spectrum-UIIcon--medium"/><path d="M9 1a8 8 0 1 0 8 8 8 8 0 0 0-8-8zm5.333 4.54l-6.324 8.13a.6.6 0 0 1-.437.23h-.037a.6.6 0 0 1-.425-.176l-3.893-3.9a.6.6 0 0 1 0-.849l.663-.663a.6.6 0 0 1 .848 0L7.4 10.991l5.256-6.754a.6.6 0 0 1 .843-.1l.728.566a.6.6 0 0 1 .106.837z" class="spectrum-UIIcon--large"/></svg>`; }, 
 	get TripleGripper() { return html`<svg xmlns="http://www.w3.org/2000/svg" id="TripleGripper"><path d="M9.49 6H.51a.5.5 0 1 0 0 1h8.98a.5.5 0 0 0 0-1zM9.49 3H.51a.5.5 0 1 0 0 1h8.98a.5.5 0 0 0 0-1zM.51 1h8.98a.5.5 0 0 0 0-1H.51a.5.5 0 0 0 0 1z" class="spectrum-UIIcon--medium"/><path d="M11.49 8H.51a.5.5 0 1 0 0 1h10.98a.5.5 0 1 0 0-1zM11.49 4H.51a.5.5 0 1 0 0 1h10.98a.5.5 0 0 0 0-1zM.51 1h10.98a.5.5 0 0 0 0-1H.51a.5.5 0 0 0 0 1z" class="spectrum-UIIcon--large"/></svg>`; }, 
 
-    // extras
+	// extras
+	get Circle() { return html`<svg id="spectrum-icon-24-Circle" viewBox="0 0 48 48" width="100%" height="100%"><circle cx="24" cy="24" r="19.9"></circle></svg>`;},
     get AddCircle() {  return html`<svg id="spectrum-icon-24-AddCircle" viewBox="0 0 48 48" width="100%" height="100%"><path d="M24 4.1A19.9 19.9 0 1 0 43.9 24 19.9 19.9 0 0 0 24 4.1zM36 25a1 1 0 0 1-1 1h-9v9a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-9h-9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h9v-9a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v9h9a1 1 0 0 1 1 1z"></path></svg>`; }
 }

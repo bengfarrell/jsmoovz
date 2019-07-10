@@ -1,16 +1,47 @@
-import {html} from '../../../node_modules/lit-html/lit-html.js';
+import {html} from '../../../web_modules/lit-html.js';
 import LeftPanel from '../left-panel/leftpanel.js';
+import Tracks from '../tracks/tracks.js';
+import Footer from '../footer/footer.js';
+
 export default {
-    render() {
+    render(scope) {
         return html`${this.css()}
-                    ${this.html()}`;
+                    ${this.html(scope)}`;
     },
 
-    html() {
-        return html`<moovz-left-panel></moovz-left-panel>`;
+    html(scope) {
+        return html`<section>
+                        <moovz-left-panel></moovz-left-panel>
+                        <moovz-tracks></moovz-tracks>
+                    </section>
+            
+                    <moovz-footer></moovz-footer>`;
     },
 
     css() {
+        return html`<style>
+            :host { 
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+            }
 
+            section {
+                display: flex;
+                width: 100%;
+            }
+
+            moovz-left-panel {
+                width: 150px;
+            }
+
+            moovz-tracks {
+                flex: 1;
+            }
+
+            moovz-footer {
+                margin-top: auto;
+            }
+        </style>`;
     }
 }
